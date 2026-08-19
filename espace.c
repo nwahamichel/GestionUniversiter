@@ -19,6 +19,7 @@ Faculter *menuAdmin(Faculter *Universite,Etudiant *listeEtudiant, InfoUniversite
         printf(CYAN"5. Ajouter une / des question a un cours\n"RESET);
         printf(CYAN"6. Afficher la structure complete de l'universite\n"RESET);
         printf(CYAN"7. Voir les statistique de l'universiter\n"RESET);
+        printf(CYAN"8. Suppression\n"RESET);
         printf(CYAN"0. Retour au menu principale\n"RESET);
         trace1();
         printf("Votre choix :");
@@ -136,6 +137,54 @@ Faculter *menuAdmin(Faculter *Universite,Etudiant *listeEtudiant, InfoUniversite
                 break;
             case 7:
                 afficherStat(Universite,listeEtudiant);
+                break;
+            case 8:
+                trace1();
+                printf("            MENU DE SUPPRESSION\n");
+                trace1();
+                printf("1. Supprimer une faculter\n");
+                printf("2. Supprimer une filiere\n");
+                printf("3. Supprimer un cours\n");
+                printf("0. Retour au menu principale\n");
+                trace1();
+                printf("Votre choix :");
+                int choixSuppression;
+                scanf("%d",&choixSuppression);
+                getchar();
+                switch(choixSuppression)
+                {
+                    case 1:
+                        printf("Entrer le code de la faculter a supprimer :");
+                        fgets(codeFac,sizeof(codeFac),stdin);
+                        codeFac[strcspn(codeFac,"\n")] = 0;
+
+                        Universite = supprimerFaculte(*univ,Universite,listeEtudiant,codeFac);
+                        break;
+                    case 2:
+                        printf("Entrer le code de la faculter :");
+                        fgets(codeFac,sizeof(codeFac),stdin);
+                        codeFac[strcspn(codeFac,"\n")] = 0;
+
+                        printf("Entrer le nom de la filiere a supprimer :");
+                        fgets(nomFil,sizeof(nomFil),stdin);
+                        nomFil[strcspn(nomFil,"\n")] = 0;
+
+                        supprimerFiliere(*univ,Universite,listeEtudiant,codeFac,nomFil);
+                        break;
+                    case 3:
+                        printf("Entrer le code du cours a supprimer :");
+                        fgets(codeCours,sizeof(codeCours),stdin);
+                        codeCours[strcspn(codeCours,"\n")] = 0;
+
+                        supprimerCours(*univ,Universite,listeEtudiant,codeCours);
+                        break;
+                    case 0:
+                        printf("Retour au menu principale \n");
+                        break;
+                    default:
+                        printf(RED"Choix invallide\n"RESET);
+                        break;
+                }
                 break;
             case 0:
                 printf("Retour au menu principale \n");

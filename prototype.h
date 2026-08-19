@@ -126,4 +126,9 @@ void configurationInfoUni(InfoUniversite *univ,char nom[100],char sigle[20],char
 //trace
 void trace1();
 void trace2();
+
+//Suppresion
+Faculter* supprimerFaculte(InfoUniversite info, Faculter *Universite, Etudiant *listeEtud, const char *codeFac) ;
+void supprimerFiliere(InfoUniversite info, Faculter *Universite, Etudiant *listeEtud, const char *codeFac, const char *nomFil);
+void supprimerCours(InfoUniversite info, Faculter *Universite, Etudiant *listeEtud, const char *codeCours) ;
 #endif //PROTOTYPE_H 

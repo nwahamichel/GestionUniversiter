@@ -421,3 +421,194 @@ void affichetEtudiant(Etudiant *li)
         }
     }
 }
+
+// ==========================================
+// 1. SUPPRIMER UNE FACULTÉ ET METTRE À JOUR LE JSON
+// ==========================================
+Faculter* supprimerFaculte(InfoUniversite info, Faculter *Universite, Etudiant *listeEtud, const char *codeFac) {
+    if (Universite == NULL) 
+    {
+        printf(RED "Erreur : Aucune faculte a supprimer !\n" RESET);
+        return NULL;
+    }
+
+    Faculter *temp = Universite;
+    Faculter *prev = NULL;
+
+    while (temp != NULL && strcmp(temp->codeFaculter, codeFac) != 0) {
+        prev = temp;
+        temp = temp->suiv;
+    }
+
+    if (temp == NULL) {
+        printf(RED "Faculte [%s] introuvable !\n" RESET, codeFac);
+        return Universite;
+    }
+
+    // Retirer le nœud de la liste chaînée
+    if (prev == NULL) {
+        Universite = temp->suiv;
+    } else {
+        prev->suiv = temp->suiv;
+    }
+
+    // Libérer la mémoire des filières, cours et questions
+    Filiere *fi = temp->listeFiliere;
+    while (fi != NULL) {
+        Filiere *fi_suiv = fi->suiv;
+        Cours *c = fi->listeCours;
+        while (c != NULL) {
+            Cours *c_suiv = c->suiv;
+            Question *q = c->listeQuestion;
+            while (q != NULL) {
+                Question *q_suiv = q->suiv;
+                free(q);
+                q = q_suiv;
+            }
+            free(c);
+            c = c_suiv;
+        }
+        free(fi);
+        fi = fi_suiv;
+    }
+    free(temp);
+
+    printf(GREEN "La faculte [%s] a ete supprimee avec succes.\n" RESET, codeFac);
+
+    // 💥 Mise à jour directe du fichier JSON
+    sauvegarderDonnees(info, Universite, listeEtud, "sauvegarde.json");
+
+    return Universite;
+}
+
+// ==========================================
+// 2. SUPPRIMER UNE FILIÈRE ET METTRE À JOUR LE JSON
+// ==========================================
+void supprimerFiliere(InfoUniversite info, Faculter *Universite, Etudiant *listeEtud, const char *codeFac, const char *nomFil) {
+    Faculter *f = Universite;
+    while (f != NULL && strcmp(f->codeFaculter, codeFac) != 0) {
+        f = f->suiv;
+    }
+
+    if (f == NULL) {
+        printf(RED "Faculte [%s] introuvable !\n" RESET, codeFac);
+        return;
+    }
+
+    Filiere *fi = f->listeFiliere;
+    Filiere *prev = NULL;
+
+    while (fi != NULL && strcmp(fi->nomFilier, nomFil) != 0) {
+        prev = fi;
+        fi = fi->suiv;
+    }
+
+    if (fi == NULL) {
+        printf(RED "Filiere [%s] introuvable dans la faculter [%s] !\n" RESET, nomFil, codeFac);
+        return;
+    }
+
+    if (prev == NULL) {
+        f->listeFiliere = fi->suiv;
+    } else {
+        prev->suiv = fi->suiv;
+    }
+
+    // Libérer la mémoire
+    Cours *c = fi->listeCours;
+    while (c != NULL) {
+        Cours *c_suiv = c->suiv;
+        Question *q = c->listeQuestion;
+        while (q != NULL) {
+            Question *q_suiv = q->suiv;
+            free(q);
+            q = q_suiv;
+        }
+        free(c);
+        c = c_suiv;
+    }
+    free(fi);
+
+    printf(GREEN "La filiere [%s] a ete supprimee avec succes.\n" RESET, nomFil);
+
+    // 💥 Mise à jour directe du fichier JSON
+    sauvegarderDonnees(info, Universite, listeEtud, "sauvegarde.json");
+}
+
+// ==========================================
+// 3. SUPPRIMER UN COURS ET METTRE À JOUR LE JSON
+// ==========================================
+void supprimerCours(InfoUniversite info, Faculter *Universite, Etudiant *listeEtud, const char *codeCours) {
+    Faculter *f = Universite;
+    while (f != NULL) {
+        Filiere *fi = f->listeFiliere;
+        while (fi != NULL) {
+            Cours *c = fi->listeCours;
+            Cours *prev = NULL;
+
+            while (c != NULL && strcmp(c->code, codeCours) != 0) {
+                prev = c;
+                c = c->suiv;
+            }
+
+            if (c != NULL) {
+                if (prev == NULL) {
+                    fi->listeCours = c->suiv;
+                } else {
+                    prev->suiv = c->suiv;
+                }
+
+                Question *q = c->listeQuestion;
+                while (q != NULL) {
+                    Question *q_suiv = q->suiv;
+                    free(q);
+                    q = q_suiv;
+                }
+                free(c);
+
+                printf(GREEN "Le cours [%s] a ete supprime avec succes.\n" RESET, codeCours);
+
+                // 💥 Mise à jour directe du fichier JSON
+                sauvegarderDonnees(info, Universite, listeEtud, "sauvegarde.json");
+                return;
+            }
+            fi = fi->suiv;
+        }
+        f = f->suiv;
+    }
+    printf(RED "Le cours [%s] n'a pas ete trouve !\n" RESET, codeCours);
+}
+
+// ==========================================
+// . MODIFIER UN COURS + MISE À JOUR JSON
+// ==========================================
+void modifierCours(InfoUniversite info, Faculter *Universite, Etudiant *listeEtud, const char *codeCours, const char *nouveauNomUE, const char *nouveauProf) {
+    Faculter *f = Universite;
+    int trouve = 0;
+
+    while (f != NULL && !trouve) {
+        Filiere *fi = f->listeFiliere;
+        while (fi != NULL && !trouve) {
+            Cours *c = fi->listeCours;
+            while (c != NULL) {
+                if (strcmp(c->code, codeCours) == 0) {
+                    strcpy(c->nomUE, nouveauNomUE);
+                    strcpy(c->nomEnseignant, nouveauProf);
+                    trouve = 1;
+                    break;
+                }
+                c = c->suiv;
+            }
+            fi = fi->suiv;
+        }
+        f = f->suiv;
+    }
+
+    if (trouve) {
+        printf(GREEN "Cours [%s] modifie avec succes !\n" RESET, codeCours);
+        // 💥 ÉCRITURE IMMÉDIATE DANS LE JSON
+        sauvegarderDonnees(info, Universite, listeEtud, "sauvegarde.json");
+    } else {
+        printf(RED "Cours [%s] introuvable !\n" RESET, codeCours);
+    }
+}

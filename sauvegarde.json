@@ -1,0 +1,11 @@
+{
+	"infos_generales":	{
+		"nom":	"Michel-Nwaha University",
+		"sigle":	"MNU",
+		"adresse":	"kondengui.rue435",
+		"telephone":	"237 689526038",
+		"email":	"michel@gmail.com"
+	},
+	"facultes":	[],
+	"etudiants":	[]
+}
