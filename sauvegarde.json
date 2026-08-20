@@ -6,6 +6,25 @@
 		"telephone":	"237 689526038",
 		"email":	"michel@gmail.com"
 	},
-	"facultes":	[],
-	"etudiants":	[]
+	"facultes":	[{
+			"codeFaculter":	"FS",
+			"nomFaculter":	"Faculter des science",
+			"filieres":	[{
+					"nomFiliere":	"Informatique",
+					"cours":	[]
+				}]
+		}, {
+			"codeFaculter":	"FALSH",
+			"nomFaculter":	"Faculter des lettres",
+			"filieres":	[]
+		}],
+	"etudiants":	[{
+			"matricule":	"25H2925",
+			"nom":	"Nwaha",
+			"prenom":	"Michel Tresor",
+			"age":	18,
+			"faculter":	"Faculter des science",
+			"filiere":	"Informatique",
+			"notes":	[]
+		}]
 }

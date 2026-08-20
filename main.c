@@ -17,14 +17,14 @@ int main()
 
     // MESSAGE DE BIENVENUE A TOUT LE MONDE
     printf("\n");
-    printf(GREEN"  \n 👨‍👩‍👧 BIENVENUE (WELCOME) a tous et toutes dans 'MIN-NOIRES UNIVERSITY (MIN-UNI)'\n"RESET);
+    printf(GREEN"  \n 👨‍👩‍👧 BIENVENUE (WELCOME) a tous et toutes dans '%s [%s]'\n"RESET,univ.nom,univ.sigle);
     printf(CYAN"  Que vous soyez Enseignant ou Etudiant,         \n"RESET);
     printf(CYAN"  nous vous souhaitons une excellente session de travail !       \n"RESET);
     printf("\n");
 
     do {
         trace1();
-        printf(YELLOW"\n               🏠 ACCUEIL PRINCIPAL                \n"RESET);
+        printf(YELLOW"\n                ACCUEIL PRINCIPAL  🏛️              \n"RESET);
         trace1();
         printf(GREEN BOLD" 1. Se connecter a l'Espace Administration 👤\n"RESET);
         printf(GREEN BOLD" 2. Acceder a l'Espace Etudiant 👥\n"RESET);
@@ -61,7 +61,7 @@ int main()
                 break;
 
             case 3:
-                printf("\nSauvegarde des donnees en cours...\n");
+                printf(BLUE"\nSauvegarde des donnees en cours...\n"RESET);
                 // Sauvegarde automatique lors de la fermeture
                 sauvegarderDonnees(univ,maUniversite, listeEtudiants, "sauvegarde.json");
                 printf("Au revoir !\n");

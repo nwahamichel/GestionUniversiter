@@ -29,7 +29,7 @@ Faculter *AjouterFac(Faculter *li,char code[10],char nom[50])
     nouv->suiv = NULL;
     if(li == NULL)
     {
-        printf("Faculter [%s] creee avec succes\n",nom);
+        printf(GREEN"%s creee avec succes\n"RESET,nom);
         return nouv;
     }else{
         Faculter *tmp = li;
@@ -48,7 +48,7 @@ Faculter *ajouterFiliere(Faculter *li,char codeFac[10],char nomFiliere[50])
 {
     if(li == NULL)
     {
-        printf("Aucune faculter.\n");
+        printf(RED"Aucune faculter.\n"RESET);
         return li;
     }
     Faculter *tmpFac = li;
@@ -58,13 +58,13 @@ Faculter *ajouterFiliere(Faculter *li,char codeFac[10],char nomFiliere[50])
     }
     if(tmpFac == NULL)
     {
-        printf("Erreur : La faculter avec le code [%s] n'existe pas\n",codeFac);
+        printf(RED"Erreur : La faculter avec le code [%s] n'existe pas\n"RESET,codeFac);
         return li;
     }
     Filiere *nouvFil = (Filiere*)malloc(sizeof(Filiere));
     if (nouvFil == NULL)
     {
-        printf("Allocation echouer\n");
+        printf(RED"Allocation echouer\n"RESET);
         return li;
     }
     strcpy(nouvFil->nomFilier,nomFiliere);
@@ -83,7 +83,7 @@ Faculter *ajouterFiliere(Faculter *li,char codeFac[10],char nomFiliere[50])
         }
         tmpFil->suiv = nouvFil;
     }
-    printf("Filiere [%s] ajoutee avec succes dans la faculter '%s'\n",nomFiliere,tmpFac->nomFaculter);
+    printf(GREEN"Filiere [%s] ajoutee avec succes dans la  %s\n"RESET,nomFiliere,tmpFac->nomFaculter);
     return li;
 }
 
@@ -92,7 +92,7 @@ void ajouterCours(Faculter *li,char codeFac[10],char nomFiliere[50],char codeCou
 {
     if(li == NULL)
     {
-        printf("Aucune faculter\n");
+        printf(RED"Aucune faculter\n"RESET);
         return ;
     }
     Faculter *tmpFac = li;
@@ -102,12 +102,12 @@ void ajouterCours(Faculter *li,char codeFac[10],char nomFiliere[50],char codeCou
     }
     if(tmpFac == NULL)
     {
-        printf("Erreur: La faculter avec le code [%s] n'existe pas\n",codeFac);
+        printf(RED"Erreur: La faculter avec le code [%s] n'existe pas\n"RESET,codeFac);
         return ;
     }
     if(tmpFac->listeFiliere == NULL)
     {
-        printf("Erreur: Aucune filiere\n");
+        printf(RED"Erreur: Aucune filiere\n"RESET);
         return ;
     }
     Filiere *tmpFil = tmpFac->listeFiliere;
@@ -117,13 +117,13 @@ void ajouterCours(Faculter *li,char codeFac[10],char nomFiliere[50],char codeCou
     }
     if(tmpFil == NULL)
     {
-        printf("Erreur : Aucune filiere avec le nom [%s] dans la faculter [%s]\n",nomFiliere,tmpFac->nomFaculter);
+        printf(RED"Erreur : Aucune filiere avec le nom [%s] dans la  [%s]\n"RESET,nomFiliere,tmpFac->nomFaculter);
         return ;
     }
     Cours *nouvCours = (Cours*)malloc(sizeof(Cours*));
     if(nouvCours == NULL)
     {
-        printf("Erreur : Allocation echouer\n");
+        printf(RED"Erreur : Allocation echouer\n"RESET);
         return ;
     }
     strcpy(nouvCours->code,codeCours);
@@ -144,7 +144,7 @@ void ajouterCours(Faculter *li,char codeFac[10],char nomFiliere[50],char codeCou
         }
         tmpCours->suiv = nouvCours;
     }
-    printf("Cours [%s]->'%s' ajoute avec succes dans la filiere %s \n",codeCours,nomUE,nomFiliere);
+    printf(GREEN"Cours [%s]->'%s' ajoute avec succes dans la filiere %s \n"RESET,codeCours,nomUE,nomFiliere);
 }
 
 //Creation des question pour chaque cours
@@ -152,7 +152,7 @@ void ajouterQuestion(Faculter *li,char codeCours[10],char enonce[200],char optA[
 {
     if(li == NULL)
     {
-        printf("Erreur : Aucune faculter \n");
+        printf(RED"Erreur : Aucune faculter \n"RESET);
         return ;
     }
     Cours *coursCible = NULL;
@@ -178,13 +178,13 @@ void ajouterQuestion(Faculter *li,char codeCours[10],char enonce[200],char optA[
     }
     if (coursCible == NULL)
     {
-        printf("Erreur : Impossible de cree le QCMs. Le cours %s n'existe pas \n",codeCours);
+        printf(RED"Erreur : Impossible de cree le QCMs. Le cours %s n'existe pas \n"RESET,codeCours);
         return ;
     }
     Question *nouvQ = (Question*)malloc(sizeof(Question));
     if(nouvQ == NULL)
     {
-        printf("Erreur : Allocation echouer\n");
+        printf(RED"Erreur : Allocation echouer\n"RESET);
         return ;
     }   
     strcpy(nouvQ->enonce,enonce);
@@ -206,7 +206,7 @@ void ajouterQuestion(Faculter *li,char codeCours[10],char enonce[200],char optA[
         }
         tmpQ->suiv = nouvQ;
     }
-    printf("Question ajouter avec succes au QCMs du cours %s \n",codeCours);
+    printf(GREEN"Question ajouter avec succes au QCMs du cours %s \n"RESET,codeCours);
 }
 
 //Afficher configuration

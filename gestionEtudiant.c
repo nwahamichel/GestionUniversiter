@@ -19,7 +19,7 @@ Etudiant *AjouterEtudiant(Etudiant *li,char mat[30],char nom[50],char prenom[30]
     nouv->suiv = NULL;
     if(li == NULL)
     {
-        printf("Etudiant %s inscrit avec succes\n",nom);
+        printf(GREEN"Etudiant %s inscrit avec succes\n"RESET,nom);
         return nouv;
     }
     Etudiant *tmp = li;
@@ -28,7 +28,7 @@ Etudiant *AjouterEtudiant(Etudiant *li,char mat[30],char nom[50],char prenom[30]
         tmp = tmp->suiv;
     }
     tmp->suiv = nouv;
-    printf("Etudiant %s inscrit avec succes\n",nom);
+    printf(GREEN"Etudiant %s inscrit avec succes\n"RESET,nom);
     return li;
 }
 
@@ -42,7 +42,7 @@ void passerQcm(Etudiant *li,Faculter *liFac,char mat[30],char codeCours[10])
     }
     if(e == NULL)
     {
-        printf("Erreur : Etudiant avec le matricule [%s] introuvable\n",mat);
+        printf(RED"Erreur : Etudiant avec le matricule [%s] introuvable\n"RESET,mat);
         return ;
     }
     Cours *coursCible = NULL;
@@ -68,15 +68,16 @@ void passerQcm(Etudiant *li,Faculter *liFac,char mat[30],char codeCours[10])
     }
     if (coursCible == NULL)
     {
-        printf("Erreur : Le cours %s n'existe pas \n",codeCours);
+        printf(RED"Erreur : Le cours %s n'existe pas \n"RESET,codeCours);
         return ;
     }
     if(coursCible->listeQuestion == NULL)
     {
-        printf("Erreur : Aucun QCM n'est disponible pour ce cours\n");
+        printf(RED"Erreur : Aucun QCM n'est disponible pour ce cours\n"RESET);
         return ;
     }
-    printf("-------DEBUT DE L'EXAMEN-----------\n");
+    trace1();
+    printf("                 DEBUT DE L'EXAMEN\n");
     Question *q = coursCible->listeQuestion;
     int totalQuetion = 0;
     int bonneReponse = 0;
@@ -95,11 +96,11 @@ void passerQcm(Etudiant *li,Faculter *liFac,char mat[30],char codeCours[10])
 
         if (choixEtud == q->bonneRep || choixEtud == (q->bonneRep + 32) || choixEtud == (q->bonneRep - 32))
         {
-            printf("Bonne reponse\n");
+            printf(GREEN"Bonne reponse ✔\n"RESET);
             bonneReponse ++;
         } else
         {
-            printf("Mauvaise reponse \n");
+            printf(RED"Mauvaise reponse ❌\n"RESET);
         }
         q = q->suiv;
     }
@@ -108,13 +109,13 @@ void passerQcm(Etudiant *li,Faculter *liFac,char mat[30],char codeCours[10])
     Note *nouv = (Note*)malloc(sizeof(Note));
     if (nouv == NULL)
     {
-        printf("Erreur : Allocation echouer\n");
+        printf(RED"Erreur : Allocation echouer\n"RESET);
         return ;
     }
     strcpy(nouv->codeCours,codeCours);
     nouv->valeurNote = noteFinal;
     nouv->suiv = e->listeNote;
-    printf("Note enrgistree avec succes\n\n");
+    printf(GREEN"Note enrgistree avec succes\n\n"RESET);
     return ;
 }
 
