@@ -12,11 +12,13 @@
 			"filieres":	[{
 					"nomFiliere":	"Informatique",
 					"cours":	[]
+				}, {
+					"nomFiliere":	"BIOS",
+					"cours":	[]
+				}, {
+					"nomFiliere":	"Mathematique",
+					"cours":	[]
 				}]
-		}, {
-			"codeFaculter":	"FALSH",
-			"nomFaculter":	"Faculter des lettres",
-			"filieres":	[]
 		}],
 	"etudiants":	[{
 			"matricule":	"25H2925",

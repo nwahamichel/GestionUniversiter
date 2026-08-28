@@ -218,7 +218,7 @@ void aficherConfig(Faculter *li)
         return ;
     }
     Faculter *f = li;
-    printf("-------------ARCHITECTURE DE L'UNIVERSITE (MIN-UNI)------------------\n");
+    printf("-------------"BLUE"ARCHITECTURE DE L'UNIVERSITE (MNU)"RESET"------------------\n");
     while(f != NULL)
     {
         printf("[Faculter] : %s (%s)\n",f->nomFaculter,f->codeFaculter);
@@ -298,7 +298,7 @@ void afficherStat(Faculter *listeFac, Etudiant *listeEtud)
 
     // --- AFFICHAGE DU RAPPORT ET DES CHIFFRES ---
     printf("\n==================================================\n");
-    printf("        TABLEAU DE BORD STATISTIQUE AVANCE        \n");
+    printf(BLUE"        TABLEAU DE BORD STATISTIQUE AVANCE        \n"RESET);
     printf("==================================================\n");
     printf("  > Nombre de Facultes   : %d\n", nbFac);
     printf("  > Nombre de Filieres   : %d\n", nbFil);

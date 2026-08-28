@@ -12,7 +12,7 @@ int main()
     int choixPrincipal = 0;
     char motDePasse[20];
 
-    printf(BLUE"\nChargement des donnees de l'universite en cours...\n"RESET);
+    printf(BLUE"\nChargement des donnees de l'universite en cours...\n\n"RESET);
     maUniversite = chargerDonnees(&univ,&maUniversite, &listeEtudiants, "sauvegarde.json");
 
     // MESSAGE DE BIENVENUE A TOUT LE MONDE
